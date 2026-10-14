@@ -1,0 +1,102 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": { "type": "postgres", "uid": "tiger-cloud" },
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 0 },
+      "id": 1,
+      "options": {
+        "candleStyle": "candles",
+        "colorStrategy": "open-close",
+        "fields": {
+          "close": "close",
+          "high": "high",
+          "low": "low",
+          "open": "open",
+          "volume": "day_volume"
+        },
+        "mode": "candles"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "tiger-cloud" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT bucket AS \"time\", open, high, low, close, day_volume FROM one_minute_candle WHERE symbol = 'BTC/USD' AND bucket >= $__timeFrom() AND bucket < $__timeTo() ORDER BY 1",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "30m",
+      "title": "BTC/USD 1-minute candles",
+      "type": "candlestick"
+    },
+    {
+      "datasource": { "type": "postgres", "uid": "tiger-cloud" },
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 10, "w": 12, "x": 0, "y": 12 },
+      "id": 2,
+      "options": {
+        "candleStyle": "candles",
+        "colorStrategy": "open-close",
+        "fields": {
+          "close": "close",
+          "high": "high",
+          "low": "low",
+          "open": "open",
+          "volume": "day_volume"
+        },
+        "mode": "candles"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "tiger-cloud" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT bucket AS \"time\", open, high, low, close, day_volume FROM one_day_candle WHERE symbol = 'BTC/USD' AND bucket >= $__timeFrom() AND bucket < $__timeTo() ORDER BY 1",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "2d",
+      "title": "BTC/USD daily candle",
+      "type": "candlestick"
+    },
+    {
+      "datasource": { "type": "postgres", "uid": "tiger-cloud" },
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 10, "w": 12, "x": 12, "y": 12 },
+      "id": 3,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": []
+      },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "tiger-cloud" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT time, symbol, price, day_volume FROM crypto_ticks WHERE time > NOW() - INTERVAL '6 hours' ORDER BY time DESC LIMIT 30",
+          "refId": "A"
+        }
+      ],
+      "title": "Latest ticks",
+      "type": "table"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "tags": ["tiger", "ohlcv"],
+  "templating": { "list": [] },
+  "time": { "from": "now-30m", "to": "now" },
+  "timepicker": {},
+  "timezone": "utc",
+  "title": "Tiger Cloud OHLCV",
+  "uid": "tiger-ohlcv",
+  "version": 2
+}

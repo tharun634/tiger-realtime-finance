@@ -1,0 +1,4 @@
+twelvedata==1.4.0
+websocket-client==1.9.2
+psycopg2-binary==2.9.13
+python-dotenv==1.2.4

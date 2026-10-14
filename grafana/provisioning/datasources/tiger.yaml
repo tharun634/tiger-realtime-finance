@@ -1,0 +1,21 @@
+apiVersion: 1
+
+datasources:
+  - name: Tiger Cloud
+    uid: tiger-cloud
+    type: postgres
+    access: proxy
+    url: ${PGHOST}:${PGPORT}
+    user: ${PGUSER}
+    isDefault: true
+    secureJsonData:
+      password: ${PGPASSWORD}
+    jsonData:
+      database: ${PGDATABASE}
+      sslmode: require
+      timescaledb: true
+      postgresVersion: 1700
+      maxOpenConns: 5
+      maxIdleConns: 2
+      connMaxLifetime: 14400
+    editable: true
